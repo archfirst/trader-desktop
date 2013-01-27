@@ -24,6 +24,10 @@
  *
  * @author Naresh Bhatia
  */
+
+/*global io:true */
+/*jshint devel:true */
+
 define(
     [
     ],
@@ -35,6 +39,12 @@ define(
 
         var _repository = {
         };
+
+        var socket = io.connect('http://localhost');
+
+        socket.on('message', function(message) {
+            console.log(message);
+        });
 
         return _repository;
     }

@@ -1,10 +1,11 @@
 {
-    "name": "backbone-node-template",
-    "description": "A template for creating Backbone.js client applications accessing a Node.js server",
+    "name": "trader-desktop",
+    "description": "Demonstrates a highly interactive and visaul trading desktop",
     "version": "0.0.1",
     "private": true,
     "dependencies": {
-        "express": "3.1.0"
+        "express": "3.1.0",
+        "socket.io": "0.9.13"
     },
     "devDependencies": {
         "grunt": "0.4.x",

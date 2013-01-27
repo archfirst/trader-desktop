@@ -19,11 +19,15 @@
  *
  * @author Naresh Bhatia
  */
+
+// Requre the repository right away. This is the most logical place to
+// initialize it.
 require(
     [
         'app/common/HandlebarsUtil',
         'framework/App',
-        'jquery'
+        'jquery',
+        'app/domain/Repository'
     ],
     function(HandlebarsUtil, App, $) {
         'use strict';

@@ -1,4 +1,4 @@
-backbone-node-template
-======================
+Trader Desktop
+==============
 
-A template for creating Backbone.js client applications accessing a Node.js server
+Demonstrates a highly interactive and visaul trading desktop.
