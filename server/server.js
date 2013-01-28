@@ -22,11 +22,12 @@
 
 /*jshint node:true es5:true */
 
-var express         = require('express'),
-    app             = express(),
-    server          = require('http').createServer(app),
-    io              = require('socket.io').listen(server),
-    orderRepository = require('./OrderRepository.js');
+var express              = require('express'),
+    app                  = express(),
+    server               = require('http').createServer(app),
+    io                   = require('socket.io').listen(server),
+    orderRepository      = require('./OrderRepository.js'),
+    instrumentRepository = require('./InstrumentRepository.js');
 
 // -----------------------------------------------------------------------------
 // Web Server Setup
@@ -66,18 +67,19 @@ io.sockets.on('connection', function(socket) {
 // RESTful Service Setup
 // -----------------------------------------------------------------------------
 
-// Order object:
-//  id: int
-//  creationTime: date,
-//  side: 'Buy' | 'Sell'
-//  symbol: String
-//  quantity: int
-//  quantityPlaced: int
-//  quantityExecuted: int
-//  limitPrice: float
-//  status: 'New' | 'Placed' | 'Filled' | 'Canceled'
-//  traderId: String
-//  alerts: []
+// ----- Order -----
+// id: int
+// creationTime: date,
+// side: 'Buy' | 'Sell'
+// symbol: String
+// quantity: int
+// quantityPlaced: int
+// quantityExecuted: int
+// limitPrice: float
+// priority: int  [1 (Low) - 100 (High)]
+// status: 'New' | 'Placed' | 'Filled' | 'Canceled'
+// traderId: String
+// alerts: []
 
 // Create order
 // Expects an order in the request body with the following properties filled:
@@ -102,4 +104,18 @@ app.get('/rest/orders', function (req, res) {
     'use strict';
     res.setHeader('Content-Type', 'application/json');
     return res.send(orderRepository.getAll());
+});
+
+// ----- Instrument -----
+// symbol: String
+// name: String
+// bid: float
+// offer: float
+// last: float
+
+// Get all instruments
+app.get('/rest/instruments', function (req, res) {
+    'use strict';
+    res.setHeader('Content-Type', 'application/json');
+    return res.send(instrumentRepository.getAll());
 });

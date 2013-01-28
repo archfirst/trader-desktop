@@ -28,6 +28,7 @@ exports.persist = function(order) {
     order.creationTime = new Date();
     order.quantityPlaced = 0;
     order.quantityExecuted = 0;
+    order.priority = 50;
     order.status = 'New';
     order.alerts = [];
     orders.push(order);
