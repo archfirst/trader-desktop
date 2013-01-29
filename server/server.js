@@ -28,8 +28,9 @@ var _                    = require('underscore'),
     server               = require('http').createServer(app),
     io                   = require('socket.io').listen(server),
     socketUtil           = require('./SocketUtil.js'),
-    orderRepository      = require('./OrderRepository.js'),
-    instrumentRepository = require('./InstrumentRepository.js');
+    userRepository      = require('./UserRepository.js'),
+    instrumentRepository = require('./InstrumentRepository.js'),
+    orderRepository      = require('./OrderRepository.js');
 
 // -----------------------------------------------------------------------------
 // Web Server Setup
@@ -121,6 +122,17 @@ app.get('/rest/instruments', function (req, res) {
     'use strict';
     res.setHeader('Content-Type', 'application/json');
     return res.send(instrumentRepository.getAll());
+});
+
+// ----- Yser -----
+// id: String
+// name: String
+
+// Get all users
+app.get('/rest/users', function (req, res) {
+    'use strict';
+    res.setHeader('Content-Type', 'application/json');
+    return res.send(userRepository.getAll());
 });
 
 // -----------------------------------------------------------------------------

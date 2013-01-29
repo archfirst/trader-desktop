@@ -174,7 +174,7 @@ var instruments = [
         'symbol': 'YHOO',
         'name': 'Yahoo! Inc.',
         'lastTrade': 20
-    },
+    }
 ];
 
 exports.getAll = function() {
