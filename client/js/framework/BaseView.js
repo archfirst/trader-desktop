@@ -69,8 +69,6 @@ define(
                     child.place(childSpec.parentElement);
                 }
 
-                // console.log('addChild: ' + childSpec.id);
-
                 return child;
             },
 
@@ -92,7 +90,6 @@ define(
                 for (var id in children) {
                     if (children.hasOwnProperty(id)) {
                         children[id].destroy();
-                        // console.log('destroyChild: ' + id);
                         delete children[id];
                     }
                 }

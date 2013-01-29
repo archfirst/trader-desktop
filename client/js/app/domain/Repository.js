@@ -48,6 +48,10 @@ define(
             console.log(placement);
         });
 
+        Socket.on('executionCreatedEvent', function(execution) {
+            console.log(execution);
+        });
+
         return _repository;
     }
 );

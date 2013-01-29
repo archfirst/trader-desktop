@@ -23,11 +23,12 @@
 /*jshint node:true es5:true */
 
 var socketUtil = require('./SocketUtil.js');
+var instrumentRepository = require('./InstrumentRepository.js');
 
 var nextId = 1;
 var maxPlacementInterval = 2; // in seconds
 var maxExecutionInterval = 2; // in seconds
-//var maxPriceSpread = 10;       // in percentage
+var maxPriceSpread = 10;      // in percentage
 
 // Constructor
 var Order = function(orderParams) {
@@ -91,10 +92,14 @@ Order.prototype = {
             // Compute a random quantity to place (max 10%)
             var quantityToPlace = Math.round(Math.random() * 0.1 * this.quantity);
 
-            // Make sure we do not place more than needed
+            // What's the maximum we can place based on the quantity that remains to be placed
             var maxQuantityToPlace = this.quantity - this.quantityPlaced;
             if (quantityToPlace >  maxQuantityToPlace) {
                 quantityToPlace = maxQuantityToPlace;
+            }
+
+            if (quantityToPlace <= 0) {
+                return;
             }
 
             // Do the placement
@@ -112,7 +117,7 @@ Order.prototype = {
             // Broadcast the placement
             socketUtil.broadcast('placementCreatedEvent', {
                 orderId: this.id,
-                quantity: quantityToPlace,
+                quantityPlaced: quantityToPlace,
                 orderStatus: this.status});
         }
     },
@@ -120,6 +125,69 @@ Order.prototype = {
     tryExecuting: function() {
         'use strict';
 
+        var now = new Date().getTime();
+        if (now >= this._nextExecutionTime) {
+
+            // Compute a random quantity to execute (max 10%)
+            var quantityToExecute = Math.round(Math.random() * 0.1 * this.quantity);
+
+            // What's the maximum we can execute based on what has been placed
+            var maxQuantityToExecute = this.quantityPlaced - this.quantityExecuted;
+            if (quantityToExecute >  maxQuantityToExecute) {
+                quantityToExecute = maxQuantityToExecute;
+            }
+
+            // What's the maximum we can execute based on the quantity that remains to be executed
+            maxQuantityToExecute = this.quantity - this.quantityExecuted;
+            if (quantityToExecute >  maxQuantityToExecute) {
+                quantityToExecute = maxQuantityToExecute;
+            }
+
+            if (quantityToExecute <= 0) {
+                return;
+            }
+
+            // Do the execution
+            this.quantityExecuted += quantityToExecute;
+
+            // Calculate the execution price
+            var maxPriceChange = this.limitPrice * (maxPriceSpread/100);
+            // e.g. assume limit price = $110
+            // maxPriceChange = $110 % .1 = $11.00
+            
+            var actualPriceChange = maxPriceChange * Math.random();
+            actualPriceChange = (Math.round(actualPriceChange * 100))/100; // round to 2 digits
+            // Assume Math.random() returns .4
+            // e.g. actualPriceChange = $11.00 * 0.4 = $4.40
+
+            var executionPrice = (this.side === 'Buy') ?
+                this.limitPrice - actualPriceChange :
+                this.limitPrice + actualPriceChange;
+            // e.g. buy execution price =  $110 - $4.40 = $105.60
+            //      sell execution price = $110 + $4.40 = $114.60
+
+            // Save the execution price in the repository
+            var instruments = instrumentRepository.get(this.symbol);
+            if (instruments.length === 1) {
+                instruments[0].last = executionPrice;
+            }
+
+            // Check if fully executed
+            if (this.quantityExecuted === this.quantity) {
+                this.status = 'Executed';
+            }
+            else {
+                // Reinitialize next execution time
+                this.computeNextExecutionTime();
+            }
+
+            // Broadcast the execution
+            socketUtil.broadcast('executionCreatedEvent', {
+                orderId: this.id,
+                quantityExecuted: quantityToExecute,
+                executionPrice: executionPrice,
+                orderStatus: this.status});
+        }
     }
 };
 
