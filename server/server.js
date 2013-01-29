@@ -49,17 +49,17 @@ console.log('Listening on port 8080');
 
 io.set('log level', 1);
 
-// Log socket connections
+// Log socket connections and disconnections
 io.sockets.on('connection', function(socket) {
     'use strict';
     console.log(socket.id + ' connected');
+
+    socket.on('disconnect', function() {
+        console.log(socket.id + ' disconnected');
+    });
 });
 
 // Log socket disconnections
-io.sockets.on('disconnect', function(socket) {
-    'use strict';
-    console.log(socket.id + ' disconnected');
-});
 
 var broadcast = function(event, message) {
     'use strict';
