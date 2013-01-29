@@ -15,7 +15,7 @@
  */
 
 /**
- * InstrumentRepository.js
+ * SocketUtil.js
  *
  * @author Naresh Bhatia
  */
@@ -24,45 +24,19 @@
 
 var _ = require('underscore');
 
-var instruments = [
-    {
-        'symbol': 'AAPL',
-        'name': 'Apple',
-        'last': 111
-    },
-    {
-        'symbol': 'MSFT',
-        'name': 'Microsoft',
-        'last': 78
-    },
-    {
-        'symbol': 'GOOG',
-        'name': 'Google',
-        'last': 101
-    },
-    {
-        'symbol': 'NOK',
-        'name': 'Nokia',
-        'last': 10
-    },
-    {
-        'symbol': 'SMSN',
-        'name': 'Samsung',
-        'last': 89
-    },
-    {
-        'symbol': 'INTC',
-        'name': 'Intel Corporation',
-        'last': 111
-    }
-];
+var _io;
 
-exports.getAll = function() {
+exports.init = function(io) {
     'use strict';
-    return instruments;
+    _io = io;
 };
 
-exports.get = function(symbol) {
+// Broadcast and event to all open sockets
+exports.broadcast = function(event, message) {
     'use strict';
-    _.where(instruments, {symbol : symbol});
+
+    var clients = _io.sockets.clients();
+    _.each(clients, function(client) {
+        client.emit(event, message);
+    });
 };

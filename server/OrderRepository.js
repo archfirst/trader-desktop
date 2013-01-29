@@ -22,22 +22,16 @@
 
 /*jshint node:true es5:true */
 
-var _ = require('underscore');
-
-var nextId = 1;
+var _     = require('underscore'),
+    Order = require('./Order.js');
 
 var orders = [];
 
-exports.persist = function(order) {
+exports.persist = function(orderParams) {
     'use strict';
-    order.id = nextId++;
-    order.creationTime = new Date();
-    order.quantityPlaced = 0;
-    order.quantityExecuted = 0;
-    order.priority = 50;
-    order.status = 'New';
-    order.alerts = [];
+    var order = new Order(orderParams);
     orders.push(order);
+    return order;
 };
 
 exports.getAll = function() {

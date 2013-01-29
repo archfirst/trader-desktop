@@ -22,10 +22,12 @@
 
 /*jshint node:true es5:true */
 
-var express              = require('express'),
+var _                    = require('underscore'),
+    express              = require('express'),
     app                  = express(),
     server               = require('http').createServer(app),
     io                   = require('socket.io').listen(server),
+    socketUtil           = require('./SocketUtil.js'),
     orderRepository      = require('./OrderRepository.js'),
     instrumentRepository = require('./InstrumentRepository.js');
 
@@ -59,16 +61,7 @@ io.sockets.on('connection', function(socket) {
     });
 });
 
-// Log socket disconnections
-
-var broadcast = function(event, message) {
-    'use strict';
-
-    var clients = io.sockets.clients();
-    for (var i=0; i < clients.length; i++) {
-        clients[i].emit(event, message);
-    }
-};
+socketUtil.init(io);
 
 // -----------------------------------------------------------------------------
 // RESTful Service Setup
@@ -99,11 +92,11 @@ var broadcast = function(event, message) {
 // }
 app.post('/rest/orders', function (req, res) {
     'use strict';
-    var order = req.body;
-    orderRepository.persist(order);
+    var orderParams = req.body;
+    var order = orderRepository.persist(orderParams);
 
     // Broadcast order to clients
-    broadcast('orderCreatedEvent', order);
+    socketUtil.broadcast('orderCreatedEvent', order);
 
     // Send response to caller
     res.status(201);
@@ -137,5 +130,9 @@ app.get('/rest/instruments', function (req, res) {
 // -----------------------------------------------------------------------------
 setInterval(function() {
     'use strict';
-    console.log('Processing orders...');
-}, 1000);
+
+    var orders = orderRepository.getAll();
+    _.each(orders, function(order) {
+        order.processTick();
+    });
+}, 2000);

@@ -44,6 +44,10 @@ define(
             console.log(order);
         });
 
+        Socket.on('placementCreatedEvent', function(placement) {
+            console.log(placement);
+        });
+
         return _repository;
     }
 );
