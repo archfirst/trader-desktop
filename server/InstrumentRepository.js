@@ -19,55 +19,62 @@
  *
  * @author Naresh Bhatia
  */
+
+/*jshint node:true es5:true */
+
+var _ = require('underscore');
+
 var instruments = [
     {
-        "symbol": "AAPL",
-        "name": "Apple",
-        "bid": 112,
-        "offer": 110,
-        "last": 111
+        'symbol': 'AAPL',
+        'name': 'Apple',
+        'bid': 112,
+        'offer': 110,
+        'last': 111
     },
-    { 
-        "symbol": "MSFT",
-        "name": "Microsoft",
-        "bid": 70,
-        "offer": 75,
-        "last": 78
+    {
+        'symbol': 'MSFT',
+        'name': 'Microsoft',
+        'bid': 70,
+        'offer': 75,
+        'last': 78
     },
-    { 
-        "symbol": "GOOG",
-        "name": "Google",
-        "bid": 98,
-        "offer": 102,
-        "last": 101
+    {
+        'symbol': 'GOOG',
+        'name': 'Google',
+        'bid': 98,
+        'offer': 102,
+        'last': 101
     },
-    { 
-        "symbol": "NOK",
-        "name": "Nokia",
-        "bid": 8,
-        "offer": 9,
-        "last": 10
+    {
+        'symbol': 'NOK',
+        'name': 'Nokia',
+        'bid': 8,
+        'offer': 9,
+        'last': 10
     },
-    { 
-        "symbol": "SMSN",
-        "name": "Samsung",
-        "bid": 86,
-        "offer": 90,
-        "last": 89
+    {
+        'symbol': 'SMSN',
+        'name': 'Samsung',
+        'bid': 86,
+        'offer': 90,
+        'last': 89
     },
-    { 
-        "symbol": "INTC",
-        "name": "Intel Corporation",
-        "bid": 112,
-        "offer": 110,
-        "last": 111
+    {
+        'symbol': 'INTC',
+        'name': 'Intel Corporation',
+        'bid': 112,
+        'offer': 110,
+        'last': 111
     }
 ];
 
 exports.getAll = function() {
+    'use strict';
     return instruments;
 };
 
 exports.get = function(symbol) {
+    'use strict';
     _.where(instruments, {symbol : symbol});
 };

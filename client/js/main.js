@@ -27,7 +27,8 @@ require(
         'app/common/HandlebarsUtil',
         'framework/App',
         'jquery',
-        'app/domain/Repository'
+        'app/domain/Repository',
+        'framework/Socket'
     ],
     function(HandlebarsUtil, App, $) {
         'use strict';

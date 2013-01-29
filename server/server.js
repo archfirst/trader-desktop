@@ -43,25 +43,32 @@ app.use(express.bodyParser());
 server.listen(8080);
 console.log('Listening on port 8080');
 
-
 // -----------------------------------------------------------------------------
 // Socket.io Setup
 // -----------------------------------------------------------------------------
 
 io.set('log level', 1);
 
-// Set up connection handling
+// Log socket connections
 io.sockets.on('connection', function(socket) {
     'use strict';
     console.log(socket.id + ' connected');
-
-    socket.broadcast.emit('message', socket.id + ' connected');
-
-    socket.on('disconnect', function() {
-        console.log(socket.id + ' disconnected');
-        socket.broadcast.emit('message', socket.id + ' disconnected');
-    });
 });
+
+// Log socket disconnections
+io.sockets.on('disconnect', function(socket) {
+    'use strict';
+    console.log(socket.id + ' disconnected');
+});
+
+var broadcast = function(event, message) {
+    'use strict';
+
+    var clients = io.sockets.clients();
+    for (var i=0; i < clients.length; i++) {
+        clients[i].emit(event, message);
+    }
+};
 
 // -----------------------------------------------------------------------------
 // RESTful Service Setup
@@ -94,6 +101,11 @@ app.post('/rest/orders', function (req, res) {
     'use strict';
     var order = req.body;
     orderRepository.persist(order);
+
+    // Broadcast order to clients
+    broadcast('orderCreatedEvent', order);
+
+    // Send response to caller
     res.status(201);
     res.setHeader('Content-Type', 'application/json');
     return res.send(order);

@@ -50,7 +50,7 @@ module.exports = function(grunt) {
     // ### jshint
     // JSHint options for the lint task
     jshint: {
-      all: ['client/js/main.js', 'client/js/config.js', 'client/js/app/**/*.js', 'client/js/framework/**/*.js'],
+      all: ['server/**/*.js', 'client/js/main.js', 'client/js/config.js', 'client/js/app/**/*.js', 'client/js/framework/**/*.js'],
       options: {
         // Enforcing Options
         bitwise       : true,

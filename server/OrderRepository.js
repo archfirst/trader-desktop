@@ -19,11 +19,17 @@
  *
  * @author Naresh Bhatia
  */
+
+/*jshint node:true es5:true */
+
+var _ = require('underscore');
+
 var nextId = 1;
 
 var orders = [];
 
 exports.persist = function(order) {
+    'use strict';
     order.id = nextId++;
     order.creationTime = new Date();
     order.quantityPlaced = 0;
@@ -35,14 +41,17 @@ exports.persist = function(order) {
 };
 
 exports.getAll = function() {
+    'use strict';
     return orders;
 };
 
 exports.find = function(properties) {
+    'use strict';
     _.where(orders, properties);
 };
 
 exports.cancel = function(id) {
+    'use strict';
     var matchedOrders = _.where(orders, {id: id});
     if (matchedOrders.length === 1) {
         matchedOrders[0].status = 'Canceled';
@@ -50,5 +59,6 @@ exports.cancel = function(id) {
 };
 
 exports.deleteAll = function() {
+    'use strict';
     orders.length = 0;
 };

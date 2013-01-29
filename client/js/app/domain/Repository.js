@@ -25,13 +25,13 @@
  * @author Naresh Bhatia
  */
 
-/*global io:true */
 /*jshint devel:true */
 
 define(
     [
+        'framework/Socket'
     ],
-    function() {
+    function(Socket) {
         'use strict';
 
         // Module level variables act as singletons
@@ -40,10 +40,8 @@ define(
         var _repository = {
         };
 
-        var socket = io.connect('http://localhost');
-
-        socket.on('message', function(message) {
-            console.log(message);
+        Socket.on('orderCreatedEvent', function(order) {
+            console.log(order);
         });
 
         return _repository;
