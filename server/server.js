@@ -131,3 +131,11 @@ app.get('/rest/instruments', function (req, res) {
     res.setHeader('Content-Type', 'application/json');
     return res.send(instrumentRepository.getAll());
 });
+
+// -----------------------------------------------------------------------------
+// Periodic Order Processing
+// -----------------------------------------------------------------------------
+setInterval(function() {
+    'use strict';
+    console.log('Processing orders...');
+}, 1000);

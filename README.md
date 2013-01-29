@@ -1,4 +1,4 @@
 Trader Desktop
 ==============
 
-Demonstrates a highly interactive and visaul trading desktop.
+Demonstrates the use of Socket.IO to push trades from a Node.js server to a Backbone-based client.
