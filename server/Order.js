@@ -169,7 +169,7 @@ Order.prototype = {
             // Save the execution price in the repository
             var instruments = instrumentRepository.get(this.symbol);
             if (instruments.length === 1) {
-                instruments[0].last = executionPrice;
+                instruments[0].lastTrade = executionPrice;
             }
 
             // Check if fully executed

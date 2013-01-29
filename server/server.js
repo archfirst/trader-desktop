@@ -114,9 +114,7 @@ app.get('/rest/orders', function (req, res) {
 // ----- Instrument -----
 // symbol: String
 // name: String
-// bid: float
-// offer: float
-// last: float
+// lastTrade: float
 
 // Get all instruments
 app.get('/rest/instruments', function (req, res) {
