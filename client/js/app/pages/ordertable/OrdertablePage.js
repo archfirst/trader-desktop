@@ -15,25 +15,30 @@
  */
 
 /**
- * app/widgets/intro/IntroWidget
+ * app/pages/ordertable/OrdertablePage
  *
  * @author Naresh Bhatia
  */
 define(
     [
         'framework/BaseView',
-        'text!app/widgets/intro/IntroTemplate.html'
+        'text!app/pages/ordertable/OrdertablePageTemplate.html'
     ],
-    function(BaseView, IntroTemplate) {
+    function(BaseView, OrdertablePageTemplate) {
         'use strict';
 
         return BaseView.extend({
             tagName: 'section',
-            className: 'intro-section',
+            id: 'order-table-page',
 
             template: {
-                name: 'IntroTemplate',
-                source: IntroTemplate
+                name: 'OrdertablePageTemplate',
+                source: OrdertablePageTemplate
+            },
+
+            postRender: function() {
+                this.addChildren([
+                ]);
             }
         });
     }

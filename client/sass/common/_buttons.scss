@@ -1,0 +1,86 @@
+/* -----------------------------------------------------------------------------
+ * buttons
+ * -------------------------------------------------------------------------- */
+a.button {
+    color: $white;
+    background-color: $button-background-color;
+    display: block;
+    text-decoration: none;
+    -webkit-transition: background-color 0.3s;
+    -moz-transition: background-color 0.3s;
+    -o-transition: background-color 0.3s;
+    -ms-transition: background-color 0.3s;
+    transition: background-color 0.3s;
+}
+
+a.button:hover {
+    background-color: $button-hover-color;
+}
+
+a.button:active {
+    color: $black;
+    background-color: $button-active-color;
+}
+
+a.button span  {
+    display: block;
+}
+
+/* -----------------------------------------------------------------------------
+ * button.small
+ * -------------------------------------------------------------------------- */
+a.button.small {
+    font-size: 12px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    width: 90px;
+}
+
+/* -----------------------------------------------------------------------------
+ * button.medium
+ * -------------------------------------------------------------------------- */
+a.button.medium {
+    font-size: 11px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    width: 105px;
+}
+
+/* -----------------------------------------------------------------------------
+ * button.large
+ * -------------------------------------------------------------------------- */
+a.button.large {
+    height: 75px;
+    width: 110px;
+}
+
+a.button.large span  {
+    background-position: center 13px;
+    padding-top: 43px;
+    text-align: center;
+}
+
+/* -----------------------------------------------------------------------------
+ * button-bar
+ * -------------------------------------------------------------------------- */
+.button-bar {
+    margin-top: 10px;
+}
+
+.button-bar a.button {
+    float: left;
+}
+
+.button-bar a.button.small {
+    margin-right: 10px;
+}
+
+.button-bar a.button.medium {
+    margin-right: 10px;
+}
+
+.button-bar a.button.large {
+    margin-right: 20px;
+}
