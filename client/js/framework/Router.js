@@ -58,7 +58,7 @@ define(
                 // Load the page and render it
                 require(['app/pages/' + page + '/' + pageName], function(PageConstructor) {
 
-                    var pageInstance = new PageConstructor().render().place('#container');
+                    var pageInstance = new PageConstructor().render().place('body');
 
                     // Remove the page on a `pageBeforeChange` event
                     pageInstance.listenTo(MessageBus, Message.PageBeforeChange, function() {

@@ -17,10 +17,10 @@
 /**
  * app/domain/Repository
  *
- * This is a singleton object that maintains the context of the logged in user.
- * The context consists of the following:
- *   user: User
- *   credentials: Credentials
+ * This is a singleton object that maintains the domain layer of the application.
+ * Domain objects in this layer generally live beyond the life of views in the
+ * presentation layer. When views are created, they are generally connected to
+ * domain objects that are already present in this repository.
  *
  * @author Naresh Bhatia
  */
@@ -29,16 +29,45 @@
 
 define(
     [
+        'backbone',
         'framework/Socket'
     ],
-    function(Socket) {
+    function(Backbone, Socket) {
         'use strict';
 
         // Module level variables act as singletons
-        // --- Module level variables go here ---
+        var _users = new Backbone.Collection();
+        var _instruments = new Backbone.Collection();
+        var _orders = new Backbone.Collection();
+
+        var _loggedInUser = null;
+
+        _users.url = '/rest/users';
+        _instruments.url = '/rest/instruments';
+        _orders.url = '/rest/orders';
 
         var _repository = {
+            getUsers: function() { return _users; },
+            getInstruments: function() { return _instruments; },
+            getOrders: function() { return _orders; },
+            getloggedInUser: function() { return _loggedInUser; },
+            
+            getUser: function(id) {
+                return _users.where({id : id});
+            },
+            
+            setloggedInUser: function(userId) {
+                _loggedInUser = _repository.getUser(userId);
+            },
+
+            fetchOrders: function() {
+                _orders.fetch();
+            }
         };
+
+        _users.fetch();
+        _instruments.fetch();
+        _orders.fetch();
 
         Socket.on('orderCreatedEvent', function(order) {
             console.log(order);

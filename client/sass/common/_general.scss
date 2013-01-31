@@ -1,28 +1,34 @@
 ﻿/* -----------------------------------------------------------------------------
- * general
- * -------------------------------------------------------------------------- */
-
-/* -----------------------------------------------------------------------------
  * Primary Styles
  * -------------------------------------------------------------------------- */
+body {
+    background-color: $page-background-color;
+}
+
 p {
     margin: 6px 0 0 0;
 }
 
 h1 {
-    font: normal normal 24px Arial;
+    font: normal normal 20px Arial;
+    margin: 0 0 10px 0;
 }
 
 h2 {
     font: normal normal 16px Arial;
 }
 
+select {
+    display: block;
+}
+
 /* -----------------------------------------------------------------------------
- * Main Container
+ * Home Page
  * -------------------------------------------------------------------------- */
-#container {
-    background-color: $container-background-color;
-    margin: auto;
+#home-page {
     padding: 10px;
-    width: 960px;
+}
+
+#order-table-page {
+    padding: 10px;
 }

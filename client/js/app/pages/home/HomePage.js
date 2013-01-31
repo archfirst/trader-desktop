@@ -22,16 +22,16 @@
 define(
     [
         'framework/BaseView',
-        'app/widgets/intro/IntroWidget',
+        'app/domain/Repository',
+        'app/widgets/login/LoginWidget',
         'text!app/pages/home/HomePageTemplate.html'
     ],
-    function(BaseView, IntroWidget, HomePageTemplate) {
+    function(BaseView, Repository, LoginWidget, HomePageTemplate) {
         'use strict';
 
         return BaseView.extend({
             tagName: 'section',
             id: 'home-page',
-            className: 'clearfix',
 
             template: {
                 name: 'HomePageTemplate',
@@ -41,9 +41,12 @@ define(
             postRender: function() {
                 this.addChildren([
                     {
-                        id: 'IntroWidget',
-                        viewClass: IntroWidget,
-                        parentElement: this.$el
+                        id: 'LoginWidget',
+                        viewClass: LoginWidget,
+                        parentElement: this.$el,
+                        options: {
+                            collection: Repository.getUsers()
+                        }
                     }
                 ]);
             }

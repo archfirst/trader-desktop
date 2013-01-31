@@ -68,6 +68,29 @@ socketUtil.init(io);
 // RESTful Service Setup
 // -----------------------------------------------------------------------------
 
+// ----- User -----
+// id: String
+// name: String
+
+// Get all users
+app.get('/rest/users', function (req, res) {
+    'use strict';
+    res.setHeader('Content-Type', 'application/json');
+    return res.send(userRepository.getAll());
+});
+
+// ----- Instrument -----
+// symbol: String
+// name: String
+// lastTrade: float
+
+// Get all instruments
+app.get('/rest/instruments', function (req, res) {
+    'use strict';
+    res.setHeader('Content-Type', 'application/json');
+    return res.send(instrumentRepository.getAll());
+});
+
 // ----- Order -----
 // id: int
 // creationTime: date,
@@ -110,29 +133,6 @@ app.get('/rest/orders', function (req, res) {
     'use strict';
     res.setHeader('Content-Type', 'application/json');
     return res.send(orderRepository.getAll());
-});
-
-// ----- Instrument -----
-// symbol: String
-// name: String
-// lastTrade: float
-
-// Get all instruments
-app.get('/rest/instruments', function (req, res) {
-    'use strict';
-    res.setHeader('Content-Type', 'application/json');
-    return res.send(instrumentRepository.getAll());
-});
-
-// ----- Yser -----
-// id: String
-// name: String
-
-// Get all users
-app.get('/rest/users', function (req, res) {
-    'use strict';
-    res.setHeader('Content-Type', 'application/json');
-    return res.send(userRepository.getAll());
 });
 
 // -----------------------------------------------------------------------------
