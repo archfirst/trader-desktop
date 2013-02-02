@@ -26,8 +26,8 @@ var _ = require('underscore');
 
 var users = [
     {
-        'id': 'AB',
-        'name': 'Asha Bhosle'
+        'id': 'AM',
+        'name': 'Amadeus Mozart'
     },
     {
         'id': 'AR',
