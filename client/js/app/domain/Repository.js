@@ -53,7 +53,8 @@ define(
             getloggedInUser: function() { return _loggedInUser; },
             
             getUser: function(id) {
-                return _users.where({id : id});
+                var matchedUsers = _users.where({id : id});
+                return (matchedUsers.length === 1) ? matchedUsers[0] : null;
             },
             
             setloggedInUser: function(userId) {
