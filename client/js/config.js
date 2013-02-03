@@ -31,7 +31,7 @@ var require = {
     paths: {
         // jQuery
         jquery:                      'vendor/jquery-1.8.3',
-        jqueryui:                    'vendor/jquery-ui-1.8.23.custom.min',
+        jqueryui:                    'vendor/jquery-ui-1.10.0.custom.min',
 
         // Underscore
         underscore:                  'vendor/underscore-1.4.3',
