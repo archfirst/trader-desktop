@@ -26,9 +26,17 @@ var socketUtil = require('./SocketUtil.js');
 var instrumentRepository = require('./InstrumentRepository.js');
 
 var nextId = 1;
-var maxPlacementInterval = 2; // in seconds
-var maxExecutionInterval = 2; // in seconds
+var maxPlacementInterval = 4; // in seconds
+var maxExecutionInterval = 4; // in seconds
 var maxPriceSpread = 10;      // in percentage
+
+// Returns a random integer between min and max
+// Using Math.round() will give you a non-uniform distribution!
+// Based on: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Math/random
+var getRandomInt = function(min, max) {
+    'use strict';
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
 // Constructor
 var Order = function(orderParams) {
@@ -55,13 +63,13 @@ var Order = function(orderParams) {
 Order.prototype = {
     computeNextPlacementTime: function() {
         'use strict';
-        var waitTime = Math.round(Math.random() * maxPlacementInterval * 1000);
+        var waitTime = getRandomInt(1, maxPlacementInterval * 1000);
         this._nextPlacementTime = new Date().getTime() + waitTime;
     },
 
     computeNextExecutionTime: function() {
         'use strict';
-        var waitTime = Math.round(Math.random() * maxExecutionInterval * 1000);
+        var waitTime = getRandomInt(1, maxExecutionInterval * 1000);
         this._nextExecutionTime = new Date().getTime() + waitTime;
     },
 
@@ -89,12 +97,12 @@ Order.prototype = {
         var now = new Date().getTime();
         if (now >= this._nextPlacementTime) {
 
-            // Compute a random quantity to place (max 10%)
-            var quantityToPlace = Math.round(Math.random() * 0.1 * this.quantity);
+            // Compute a random quantity to place (max 25%)
+            var quantityToPlace = getRandomInt(1, 0.25 * this.quantity);
 
             // What's the maximum we can place based on the quantity that remains to be placed
             var maxQuantityToPlace = this.quantity - this.quantityPlaced;
-            if (quantityToPlace >  maxQuantityToPlace) {
+            if (quantityToPlace > maxQuantityToPlace) {
                 quantityToPlace = maxQuantityToPlace;
             }
 
@@ -128,8 +136,8 @@ Order.prototype = {
         var now = new Date().getTime();
         if (now >= this._nextExecutionTime) {
 
-            // Compute a random quantity to execute (max 10%)
-            var quantityToExecute = Math.round(Math.random() * 0.1 * this.quantity);
+            // Compute a random quantity to execute (max 25%)
+            var quantityToExecute = getRandomInt(1, 0.25 * this.quantity);
 
             // What's the maximum we can execute based on what has been placed
             var maxQuantityToExecute = this.quantityPlaced - this.quantityExecuted;
