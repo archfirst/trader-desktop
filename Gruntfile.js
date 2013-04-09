@@ -20,7 +20,7 @@ module.exports = function(grunt) {
           cssDir: 'client/css',
           imagesDir: 'client/img',
           javascriptsDir: 'client/js',
-          noLineComments: true,
+          noLineComments: false,
           environment: 'development'
         }
       },

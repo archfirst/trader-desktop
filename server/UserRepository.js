@@ -20,7 +20,7 @@
  * @author Naresh Bhatia
  */
 
-/*jshint node:true es5:true */
+/*jshint node:true */
 
 var _ = require('underscore');
 

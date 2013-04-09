@@ -20,7 +20,7 @@
  * @author Naresh Bhatia
  */
 
-/*jshint node:true es5:true */
+/*jshint node:true */
 
 var socketUtil = require('./SocketUtil.js');
 var instrumentRepository = require('./InstrumentRepository.js');
@@ -126,7 +126,8 @@ Order.prototype = {
             socketUtil.broadcast('placementCreatedEvent', {
                 orderId: this.id,
                 quantityPlaced: quantityToPlace,
-                orderStatus: this.status});
+                orderStatus: this.status
+            });
         }
     },
 
@@ -162,7 +163,7 @@ Order.prototype = {
             var maxPriceChange = this.limitPrice * (maxPriceSpread/100);
             // e.g. assume limit price = $110
             // maxPriceChange = $110 % .1 = $11.00
-            
+
             var actualPriceChange = maxPriceChange * Math.random();
             actualPriceChange = (Math.round(actualPriceChange * 100))/100; // round to 2 digits
             // Assume Math.random() returns .4
@@ -194,7 +195,8 @@ Order.prototype = {
                 orderId: this.id,
                 quantityExecuted: quantityToExecute,
                 executionPrice: executionPrice,
-                orderStatus: this.status});
+                orderStatus: this.status
+            });
         }
     }
 };

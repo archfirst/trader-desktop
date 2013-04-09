@@ -51,12 +51,12 @@ define(
             getInstruments: function() { return _instruments; },
             getOrders: function() { return _orders; },
             getloggedInUser: function() { return _loggedInUser; },
-            
+
             getUser: function(id) {
                 var matchedUsers = _users.where({id : id});
                 return (matchedUsers.length === 1) ? matchedUsers[0] : null;
             },
-            
+
             setloggedInUser: function(userId) {
                 _loggedInUser = _repository.getUser(userId);
             },
