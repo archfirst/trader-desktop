@@ -15,14 +15,31 @@
  */
 
 /**
- * app/common/AppConfig
- *
- * Provides application configuration variables.
+ * app/pages/order-table/OrderTablePage
  *
  * @author Naresh Bhatia
  */
-define({
-    // The application root.
-    // If you deploy the client to something other than '/', this should be changed.
-    appRoot: '/'
-});
+define(
+    [
+        'keel/BaseView',
+        'text!app/pages/order-table/OrderTablePageTemplate.html'
+    ],
+    function(BaseView, OrdertablePageTemplate) {
+        'use strict';
+
+        return BaseView.extend({
+            tagName: 'section',
+            id: 'order-table-page',
+
+            template: {
+                name: 'OrdertablePageTemplate',
+                source: OrdertablePageTemplate
+            },
+
+            postRender: function() {
+                this.addChildren([
+                ]);
+            }
+        });
+    }
+);

@@ -15,7 +15,7 @@
  */
 
 /**
- * framework/App
+ * app/framework/App
  *
  * Based on: https://github.com/bobholt/backbone-arch-demo/blob/master/src/app/app.js
  * License:  https://github.com/bobholt/backbone-arch-demo/blob/master/LICENSE.md
@@ -28,12 +28,12 @@
 /*jshint nonew:false */
 define(
     [
-        'app/common/AppConfig',
+        'app/framework/AppConfig',
+        'app/framework/AppRouter',
         'backbone',
-        'framework/Router',
         'jquery'
     ],
-    function(AppConfig, Backbone, Router, $) {
+    function(AppConfig, Router, Backbone, $) {
         'use strict';
 
         return {

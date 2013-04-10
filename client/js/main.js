@@ -24,13 +24,13 @@
 // initialize it.
 require(
     [
-        'app/common/HandlebarsUtil',
-        'framework/App',
+        'app/framework/App',
+        'app/framework/HandlebarsUtil',
         'jquery',
         'app/domain/Repository',
-        'framework/Socket'
+        'app/framework/Socket'
     ],
-    function(HandlebarsUtil, App, $) {
+    function(App, HandlebarsUtil, $) {
         'use strict';
 
         // Set default timeout for AJAX requests to 20 seconds

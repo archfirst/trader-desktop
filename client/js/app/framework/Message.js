@@ -15,13 +15,22 @@
  */
 
 /**
- * app/common/Message
+ * app/framework/Message
  *
  * Enumeration of messages
  *
  * @author Naresh Bhatia
  */
-define({
-    PageBeforeChange: 'PageBeforeChange',
-    PageChange: 'PageChange'
+define([
+    'keel/Message',
+    'underscore'
+],
+function(frameworkMessage, _) {
+    'use strict';
+
+    var message =  _.extend({
+    }, frameworkMessage);
+
+    return message;
+
 });

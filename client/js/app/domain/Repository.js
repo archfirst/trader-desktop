@@ -30,7 +30,7 @@
 define(
     [
         'backbone',
-        'framework/Socket'
+        'app/framework/Socket'
     ],
     function(Backbone, Socket) {
         'use strict';

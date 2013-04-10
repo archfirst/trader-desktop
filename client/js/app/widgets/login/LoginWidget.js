@@ -23,7 +23,7 @@ define(
     [
         'app/domain/Repository',
         'backbone',
-        'framework/BaseView',
+        'keel/BaseView',
         'text!app/widgets/login/LoginTemplate.html'
     ],
     function(Repository, Backbone, BaseView, LoginTemplate) {
@@ -59,7 +59,7 @@ define(
             login: function() {
                 var loggedInUserId = this.userSelectorElement.val();
                 Repository.setloggedInUser(loggedInUserId);
-                Backbone.history.navigate('ordertable', true);
+                Backbone.history.navigate('order-table', true);
                 return false;
             }
         });

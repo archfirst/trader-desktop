@@ -15,31 +15,27 @@
  */
 
 /**
- * app/pages/ordertable/OrdertablePage
+ * app/framework/HandlebarsUtil
+ *
+ * Utility functions for Handlebars
  *
  * @author Naresh Bhatia
  */
 define(
     [
-        'framework/BaseView',
-        'text!app/pages/ordertable/OrdertablePageTemplate.html'
+        'handlebars'
     ],
-    function(BaseView, OrdertablePageTemplate) {
+    function() {
         'use strict';
 
-        return BaseView.extend({
-            tagName: 'section',
-            id: 'order-table-page',
+        return {
+            registerHelpers: function() {
 
-            template: {
-                name: 'OrdertablePageTemplate',
-                source: OrdertablePageTemplate
-            },
-
-            postRender: function() {
-                this.addChildren([
-                ]);
+                // formatMoney
+                // Handlebars.registerHelper('formatMoney', function(money) {
+                //     return Formatter.formatMoney(money);
+                // });
             }
-        });
+        };
     }
 );

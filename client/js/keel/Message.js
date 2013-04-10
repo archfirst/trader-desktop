@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Archfirst
+ * Copyright 2012 Archfirst
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,27 +15,29 @@
  */
 
 /**
- * app/common/HandlebarsUtil
+ * keel/Message
  *
- * Utility functions for Handlebars
+ * Enumeration of messages
  *
+ * @module Message
  * @author Naresh Bhatia
  */
-define(
-    [
-        'handlebars'
-    ],
-    function() {
-        'use strict';
+define(function() {
 
-        return {
-            registerHelpers: function() {
+    'use strict';
 
-                // formatMoney
-                // Handlebars.registerHelper('formatMoney', function(money) {
-                //     return Formatter.formatMoney(money);
-                // });
-            }
-        };
-    }
-);
+    /**
+    * The Message enumerator
+    * Defines string message names for the MessageBus for easier maintenance.
+    * keel/Message be extended within the app.
+    *
+    * @class Message
+    * @static
+    */
+    var Message = {
+        PageBeforeChange: 'PageBeforeChange',
+        PageChange: 'PageChange'
+    };
+
+    return Message;
+});

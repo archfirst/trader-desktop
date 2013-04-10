@@ -21,12 +21,12 @@
  */
 define(
     [
-        'framework/BaseView',
         'app/domain/Repository',
         'app/widgets/login/LoginWidget',
+        'keel/BaseView',
         'text!app/pages/home/HomePageTemplate.html'
     ],
-    function(BaseView, Repository, LoginWidget, HomePageTemplate) {
+    function(Repository, LoginWidget, BaseView, HomePageTemplate) {
         'use strict';
 
         return BaseView.extend({

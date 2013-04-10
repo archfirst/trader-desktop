@@ -15,7 +15,7 @@
  */
 
 /**
- * framework/Socket
+ * app/framework/Socket
  *
  * This is a singleton object that maintains a socket connection with the server.
  *
