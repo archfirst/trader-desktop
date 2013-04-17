@@ -103,7 +103,6 @@ app.get('/rest/instruments', function (req, res) {
 // priority: int  [1 (Low) - 100 (High)]
 // status: 'New' | 'Placed' | 'Filled' | 'Canceled'
 // traderId: String
-// alerts: []
 
 // Create order
 // Expects an order in the request body with the following properties filled:
@@ -133,6 +132,19 @@ app.get('/rest/orders', function (req, res) {
     'use strict';
     res.setHeader('Content-Type', 'application/json');
     return res.send(orderRepository.getAll());
+});
+
+// Delete all orders
+app.del('/rest/orders', function (req, res) {
+    'use strict';
+    orderRepository.deleteAll();
+
+    // Broadcast deleted eveent to clients
+    socketUtil.broadcast('allOrdersDeletedEvent');
+
+    // Send response to caller
+    res.setHeader('Content-Type', 'application/json');
+    return res.send(200);
 });
 
 // -----------------------------------------------------------------------------

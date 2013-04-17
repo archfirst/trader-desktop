@@ -63,7 +63,7 @@ For the purpose of this exercise, the trade button could pop up a dialog box ask
 * Start the server using the following command:
 
     $ node server/server.js
-* Start Trader Desktop by pointing your browser to http://localhost:8080. You should see the Login page.
+* Start Trader Desktop by pointing your browser to [http://localhost:8080](http://localhost:8080). You should see the Login page.
 
 ## Server RESTful API
 The server exposes three resources through a RESTful API: Users, Instruments and Orders. These resources are described below.

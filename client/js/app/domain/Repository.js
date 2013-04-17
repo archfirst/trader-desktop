@@ -62,7 +62,7 @@ define(
             },
 
             fetchOrders: function() {
-                _orders.fetch();
+                _orders.fetch({reset: true});
             }
         };
 

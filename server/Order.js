@@ -53,7 +53,6 @@ var Order = function(orderParams) {
     this.priority = 50;
     this.status = 'New';
     this.traderId = orderParams.traderId;
-    this.alerts = [];
 
     this.computeNextPlacementTime();  // in milliseconds
     this.computeNextExecutionTime();  // in milliseconds
