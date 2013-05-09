@@ -82,6 +82,10 @@ define(
             console.log(execution);
         });
 
+        Socket.on('allOrdersDeletedEvent', function() {
+            console.log('allOrdersDeletedEvent');
+        });
+
         return _repository;
     }
 );
