@@ -125,7 +125,7 @@ Order.prototype = {
             socketUtil.broadcast('placementCreatedEvent', {
                 orderId: this.id,
                 quantityPlaced: quantityToPlace,
-                orderStatus: this.status
+                status: this.status
             });
         }
     },
@@ -194,7 +194,7 @@ Order.prototype = {
                 orderId: this.id,
                 quantityExecuted: quantityToExecute,
                 executionPrice: executionPrice,
-                orderStatus: this.status
+                status: this.status
             });
         }
     }
