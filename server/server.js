@@ -152,6 +152,7 @@ app.del('/rest/orders', function (req, res) {
 // -----------------------------------------------------------------------------
 
 app.get('*', function(req, res) {
+    'use strict';
     res.sendfile('./client/index.html');
 });
 
