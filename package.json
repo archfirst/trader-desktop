@@ -1,6 +1,6 @@
 {
     "name": "trader-desktop",
-    "description": "Demonstrates a highly interactive and visaul trading desktop",
+    "description": "Demonstrates a highly interactive and visual trading desktop",
     "version": "0.0.1",
     "private": true,
     "dependencies": {
