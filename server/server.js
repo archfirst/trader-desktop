@@ -144,7 +144,8 @@ app.del('/rest/orders', function (req, res) {
 
     // Send response to caller
     res.setHeader('Content-Type', 'application/json');
-    return res.send(200);
+    res.status(204);
+    return res.send();
 });
 
 // -----------------------------------------------------------------------------
