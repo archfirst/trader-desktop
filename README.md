@@ -25,7 +25,7 @@ The server exposes three RESTful resources: Users, Instruments and Orders. These
 Returns all Trader Desktop users. Assume all these users are traders.
 
 ##### Request
-    GET http://localhost:8080/rest/users HTTP/1.1
+    GET http://localhost:8080/users HTTP/1.1
 
 ##### Response
     HTTP/1.1 200 OK
@@ -49,7 +49,7 @@ Returns all Trader Desktop users. Assume all these users are traders.
 Returns all instruments traded at the exchange.
 
 ##### Request
-    GET http://localhost:8080/rest/instruments HTTP/1.1
+    GET http://localhost:8080/instruments HTTP/1.1
 
 ##### Response
     HTTP/1.1 200 OK
@@ -88,7 +88,7 @@ An order object has the following properties:
 Returns all orders saved on the server.
 
 ##### Request
-    GET http://localhost:8080/rest/orders HTTP/1.1
+    GET http://localhost:8080/orders HTTP/1.1
 
 ##### Response
     HTTP/1.1 200 OK
@@ -115,7 +115,7 @@ Returns all orders saved on the server.
 Creates an order on the server.
 
 ##### Request
-    POST http://localhost:8080/rest/orders HTTP/1.1
+    POST http://localhost:8080/orders HTTP/1.1
     Content-Type: application/json
 
     {
@@ -148,7 +148,7 @@ Creates an order on the server.
 Deletes all orders on the server.
 
 ##### Request
-    DELETE http://localhost:8080/rest/orders HTTP/1.1
+    DELETE http://localhost:8080/orders HTTP/1.1
 
 ##### Response
     HTTP/1.1 200 OK

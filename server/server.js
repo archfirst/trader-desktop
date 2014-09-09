@@ -94,7 +94,7 @@ app.options('*', function (req, res) {
 // name: String
 
 // Get all users
-app.get('/rest/users', setAcceptsHeader, function (req, res) {
+app.get('/users', setAcceptsHeader, function (req, res) {
     'use strict';
     res.setHeader('Content-Type', 'application/json');
     return res.send(userRepository.getAll());
@@ -106,7 +106,7 @@ app.get('/rest/users', setAcceptsHeader, function (req, res) {
 // lastTrade: float
 
 // Get all instruments
-app.get('/rest/instruments', setAcceptsHeader, function (req, res) {
+app.get('/instruments', setAcceptsHeader, function (req, res) {
     'use strict';
     res.setHeader('Content-Type', 'application/json');
     return res.send(instrumentRepository.getAll());
@@ -134,7 +134,7 @@ app.get('/rest/instruments', setAcceptsHeader, function (req, res) {
 //   "limitPrice": float,
 //   "traderId": String
 // }
-app.post('/rest/orders', setAcceptsHeader, function (req, res) {
+app.post('/orders', setAcceptsHeader, function (req, res) {
     'use strict';
     var orderParams = req.body;
     var order = orderRepository.persist(orderParams);
@@ -149,14 +149,14 @@ app.post('/rest/orders', setAcceptsHeader, function (req, res) {
 });
 
 // Get all orders
-app.get('/rest/orders', setAcceptsHeader, function (req, res) {
+app.get('/orders', setAcceptsHeader, function (req, res) {
     'use strict';
     res.setHeader('Content-Type', 'application/json');
     return res.send(orderRepository.getAll());
 });
 
 // Delete all orders
-app.delete('/rest/orders', setAcceptsHeader, function (req, res) {
+app.delete('/orders', setAcceptsHeader, function (req, res) {
     'use strict';
     orderRepository.deleteAll();
 
