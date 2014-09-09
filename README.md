@@ -184,7 +184,7 @@ As mentioned earlier, the server is fully coded. Use the instrunctions below to 
 
 ### Install Build Tools ###
 * Install [Node.js](http://nodejs.org/).
-* Install [Grunt](https://github.com/gruntjs/grunt/wiki/Getting-started).
+* Install [Grunt](http://gruntjs.com/getting-started).
 
         $ npm install -g grunt-cli
 
