@@ -1,5 +1,4 @@
-*.sublime-workspace
+node_modules/
+.idea/
+*.log
 .DS_Store
-.sass-cache
-node_modules
-client/css

@@ -154,5 +154,5 @@ exports.getAll = function() {
 
 exports.get = function(id) {
     'use strict';
-    return _.where(users, {id : id});
+    return _.where(users, {id: id});
 };

@@ -184,5 +184,5 @@ exports.getAll = function() {
 
 exports.get = function(symbol) {
     'use strict';
-    return _.where(instruments, {symbol : symbol});
+    return _.where(instruments, {symbol: symbol});
 };

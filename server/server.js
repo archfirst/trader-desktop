@@ -22,25 +22,28 @@
 
 /*jshint node:true */
 
-var _                    = require('underscore'),
-    express              = require('express'),
-    app                  = express(),
-    server               = require('http').createServer(app),
-    io                   = require('socket.io').listen(server),
-    socketUtil           = require('./SocketUtil.js'),
-    userRepository      = require('./UserRepository.js'),
+var _ = require('underscore'),
+    express = require('express'),
+    app = express(),
+    server = require('http').createServer(app),
+    io = require('socket.io').listen(server),
+    socketUtil = require('./SocketUtil.js'),
+    userRepository = require('./UserRepository.js'),
     instrumentRepository = require('./InstrumentRepository.js'),
-    orderRepository      = require('./OrderRepository.js');
+    orderRepository = require('./OrderRepository.js'),
+    bodyParser = require('body-parser');
 
 // -----------------------------------------------------------------------------
 // Web Server Setup
 // -----------------------------------------------------------------------------
 
-// Any HTTP request will be satisfied using the content under './client'
-app.use(express.static('./client'));
-
 // Add middleware to parse the POST data of the body
-app.use(express.bodyParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// parse application/json
+app.use(bodyParser.json());
+
+app.use('/', express.static(__dirname + '/app'));
 
 // Start listening on port 8080
 server.listen(8080);
@@ -49,8 +52,6 @@ console.log('Listening on port 8080');
 // -----------------------------------------------------------------------------
 // Socket.io Setup
 // -----------------------------------------------------------------------------
-
-io.set('log level', 1);
 
 // Log socket connections and disconnections
 io.sockets.on('connection', function(socket) {
@@ -68,12 +69,32 @@ socketUtil.init(io);
 // RESTful Service Setup
 // -----------------------------------------------------------------------------
 
+// ----- CORS Setup -----
+
+function setAcceptsHeader(req, res, next) {
+    'use strict';
+
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    next();
+}
+
+app.options('*', function (req, res) {
+    'use strict';
+
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    res.status(200).end();
+});
+
 // ----- User -----
 // id: String
 // name: String
 
 // Get all users
-app.get('/rest/users', function (req, res) {
+app.get('/rest/users', setAcceptsHeader, function (req, res) {
     'use strict';
     res.setHeader('Content-Type', 'application/json');
     return res.send(userRepository.getAll());
@@ -85,7 +106,7 @@ app.get('/rest/users', function (req, res) {
 // lastTrade: float
 
 // Get all instruments
-app.get('/rest/instruments', function (req, res) {
+app.get('/rest/instruments', setAcceptsHeader, function (req, res) {
     'use strict';
     res.setHeader('Content-Type', 'application/json');
     return res.send(instrumentRepository.getAll());
@@ -113,7 +134,7 @@ app.get('/rest/instruments', function (req, res) {
 //   "limitPrice": float,
 //   "traderId": String
 // }
-app.post('/rest/orders', function (req, res) {
+app.post('/rest/orders', setAcceptsHeader, function (req, res) {
     'use strict';
     var orderParams = req.body;
     var order = orderRepository.persist(orderParams);
@@ -128,14 +149,14 @@ app.post('/rest/orders', function (req, res) {
 });
 
 // Get all orders
-app.get('/rest/orders', function (req, res) {
+app.get('/rest/orders', setAcceptsHeader, function (req, res) {
     'use strict';
     res.setHeader('Content-Type', 'application/json');
     return res.send(orderRepository.getAll());
 });
 
 // Delete all orders
-app.del('/rest/orders', function (req, res) {
+app.delete('/rest/orders', setAcceptsHeader, function (req, res) {
     'use strict';
     orderRepository.deleteAll();
 
@@ -144,16 +165,7 @@ app.del('/rest/orders', function (req, res) {
 
     // Send response to caller
     res.setHeader('Content-Type', 'application/json');
-    return res.send(200);
-});
-
-// -----------------------------------------------------------------------------
-// Catchall to route all other requests to index.html
-// -----------------------------------------------------------------------------
-
-app.get('*', function(req, res) {
-    'use strict';
-    res.sendfile('./client/index.html');
+    return res.status(200).end();
 });
 
 // -----------------------------------------------------------------------------

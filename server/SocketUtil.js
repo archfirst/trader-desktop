@@ -22,8 +22,6 @@
 
 /*jshint node:true */
 
-var _ = require('underscore');
-
 var _io;
 
 exports.init = function(io) {
@@ -35,8 +33,5 @@ exports.init = function(io) {
 exports.broadcast = function(event, message) {
     'use strict';
 
-    var clients = _io.sockets.clients();
-    _.each(clients, function(client) {
-        client.emit(event, message);
-    });
+    _io.emit(event, message);
 };
