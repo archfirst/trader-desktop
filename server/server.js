@@ -122,7 +122,7 @@ app.get('/rest/instruments', setAcceptsHeader, function (req, res) {
 // quantityExecuted: int
 // limitPrice: float
 // priority: int  [1 (Low) - 100 (High)]
-// status: 'New' | 'Placed' | 'Filled' | 'Canceled'
+// status: 'New' | 'Placed' | 'Executed' | 'Canceled'
 // traderId: String
 
 // Create order

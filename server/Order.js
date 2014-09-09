@@ -77,7 +77,7 @@ Order.prototype = {
 
         var status = this.status;
 
-        if (status === 'Filled' || status === 'Canceled') {
+        if (status === 'Executed' || status === 'Canceled') {
             return;
         }
 

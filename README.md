@@ -1,74 +1,25 @@
-# Trader Desktop
+Trader Desktop
+==============
 
-This is an exercise in learning key web technologies using a simple trading scenario. We will use the following technologies and frameworks to complete this exercise:
+This is an exercise in learning key web technologies using a simple trading scenario.
 
-* Node.js
-* Socket.IO
-* jQuery
-* Backbone.js
-* RequireJS
-* Keel
-* Handlebars
-* Sass/Compass
+Domain Model
+------------
+![Domain Model](assets/domain-model.png)
 
-The application consists of a Node.js based server that accepts orders for trading stocks and 'places' the orders in the market.
+The business domain consists of `Instrument`s that can be traded in a market. We will limit the scope of instruments to equities, also knows as stocks in a company. For example, we can trade stocks of Apple whose market symbol is AAPL.
 
-* The server may break a large order in to smaller chunks called 'placements' and push them to the market at different times.
-* A large order may not get filled in one shot, it may require several 'executions' to fill (depending on the supply and demand).
-* The server keeps the client informed about order progress by sending events over WebSockets.
+Traders (who are system `User`s) can place `Order`s for different instruments in the stock market. Orders placed by traders are sent to a server which manages the actual placement of the orders in the market. When it received a large order, it may be broken in to smaller chunks called `Placement`s and push them to the market at different times. This is to make sure that large orders do not swing the market in unintended ways. Also a large order may not get filled in one shot, it may require several `Execution`s to fill depending on the supply and demand of the stock.
 
-# Requirements
+The server keeps the trader informed about their orders. In fact, it keeps all traders informed of all orders in execution, whether placed by them or some other trader.
 
-The server part is fully coded. You only need to code the client part providing the following functionality:
+Server RESTful API
+------------------
+For this exercise the server has been completely coded - you don't have to worry about it. You will only be coding the front-end client.
 
-* Allow the user to place orders.
-* Display the progress of orders in a table that is updated in real time. Listen to WebSocket messages from the server to implement this. If you have the Trader Desktop open in multiple browsers, they should all show the same information.
-* Bonus points: In addition to the table, implement a creative visualization to display the same information.
+The server exposes three RESTful resources: Users, Instruments and Orders. These resources are described below.
 
-In order to help with debugging, also implement the following two functions:
-
-* Allow the user to delete all orders on the server.
-* Allow the user to "refresh" the desktop. This should drop all orders from the client and get a fresh copy from the server.
-
-The screen shot below can be used to guide your front-end implementation:
-
-![Trader Desktop](https://raw.github.com/archfirst/trader-desktop/master/docs/trader-desktop.png)
-
-For the purpose of this exercise, the trade button could pop up a dialog box asking for the number of trades to create. You can then just create that many trades using random symbols, quantities etc.
-
-![Trade Dialog](https://raw.github.com/archfirst/trader-desktop/master/docs/trade-dialog.png)
-
-## Build Instructions
-
-### Install Build Tools
-* Install [Node.js](http://nodejs.org/).
-* Install [Grunt](https://github.com/gruntjs/grunt/wiki/Getting-started).
-
-    $ npm install -g grunt-cli
-* Install [Ruby](http://rubyinstaller.org/downloads/). (required for compass/sass)
-* Install [Compass](http://compass-style.org/install/) (used for CSS authoring).
-
-    $ gem install compass
-
-### Build Trader Desktop
-* Download the Trader Desktop repository as a zip file by clicking the ZIP icon on the [repository home page](https://github.com/archfirst/trader-desktop).
-* Unzip the repository at a convenient location on your hard drive.
-* Open a command shell and change your directory to your local Trader Desktop repository.
-* Install Grunt plugins:
-
-    $ npm install
-* Execute the following command to build Trader Desktop:
-
-    $ grunt
-* Start the server using the following command:
-
-    $ node server/server.js
-* Start Trader Desktop by pointing your browser to [http://localhost:8080](http://localhost:8080). You should see the Login page.
-
-## Server RESTful API
-The server exposes three resources through a RESTful API: Users, Instruments and Orders. These resources are described below.
-
-### Users
+### Users ###
 
 #### Get Users
 Returns all Trader Desktop users. Assume all these users are traders.
@@ -92,7 +43,7 @@ Returns all Trader Desktop users. Assume all these users are traders.
       ...
     ]
 
-### Instruments
+### Instruments ###
 
 #### Get Instruments
 Returns all instruments traded at the exchange.
@@ -118,7 +69,7 @@ Returns all instruments traded at the exchange.
       ...
     ]
 
-### Orders
+### Orders ###
 An order object has the following properties:
 
     id: int
@@ -130,7 +81,7 @@ An order object has the following properties:
     quantityExecuted: int
     limitPrice: float
     priority: int  [1 (Low) - 100 (High)]
-    status: 'New' | 'Placed' | 'Filled'
+    status: 'New' | 'Placed' | 'Executed'
     traderId: String
 
 #### Get Orders
@@ -202,27 +153,90 @@ Deletes all orders on the server.
 ##### Response
     HTTP/1.1 200 OK
 
-## Server Events
-
-The server sends the following events over WebSockets.
+Server Events
+-------------
+In addition to the RESTful resources, the server also pushes events to the client using WebSockets. This is to make sure that all clients are aware of what is going on. For example, an order placed by trader A should be visible to all other traders. Server events are described below.
 
 #### orderCreatedEvent
 The payload contains the order that was created.
 
 #### placementCreatedEvent
-The payload contains an object with the following properties:
+The payload contains the placement that was created:
 
     orderId: int
     quantityPlaced: int
-    status: 'New' | 'Placed' | 'Filled'
+    status: 'New' | 'Placed' | 'Executed'
 
 #### executionCreatedEvent
-The payload contains an object with the following properties:
+The payload contains the execution that was created:
 
     orderId: int
     quantityExecuted: int
     executionPrice: float
-    status: 'New' | 'Placed' | 'Filled'
+    status: 'New' | 'Placed' | 'Executed'
 
 #### allOrdersDeletedEvent
 This event is sent when all orders on the server are deleted.
+
+Build Instructions
+------------------
+As mentioned earlier the server is fully coded. Use the instrunctions below to build and run it.
+
+### Install Build Tools ###
+* Install [Node.js](http://nodejs.org/).
+* Install [Grunt](https://github.com/gruntjs/grunt/wiki/Getting-started).
+
+    $ npm install -g grunt-cli
+
+### Build the Server ###
+* Clone the Trader Desktop repository on your machine.
+* Open a command shell and change the directory to your local instance of the Trader Desktop repository.
+* Install the require NPM packages:
+
+    $ npm install
+* Start the server using the following command:
+
+    $ npm start
+* Make sure the server is running by pointing your browser to [http://localhost:8080](http://localhost:8080). You should see the server home page with the message "This is the Trader Desktop server".
+
+Running Server Diagnostics
+--------------------------
+We have a seperate web application that allows you to run more extensive diagnostics for the Trader Desktop server. This application is also very instructive to understand how the server API really works. Go to the [Trader Desktop Server Diagnostics](https://github.com/archfirst/trader-desktop-server-diagnostics) repository, build and run the application.
+
+Trader Desktop Exercise
+-----------------------
+Now that we understand the business domain and the server API, we are now ready to describe the front-end exercise. You can build the front-end in the technlogy of your choice!
+
+### Login Screen
+![Login Screen](assets/login-screen.png)
+
+The login screen allows the user to select their name. No passwrod is required.
+
+### Trader Desktop
+![Trader Desktop](assets/trader-desktop-desktop-view.png)
+
+The trader desktop shows all the trades that have been placed by all traders, with real time updates on placement and execution status. The trader desktop has two display modes - table and chart. The mode can be be changed by clicking on the table and chart icons (these are provided in the assets directory).
+
+The three buttons at the top have the following functionality:
+
+#### Trade
+Pops up a dialog box asking for the number of trades to create. Just create the requested number of trades using random symbols, quantities etc.
+
+![Trade Dialog](assets/trade-dialog.png)
+
+#### Delete All
+Send a messeage to the server to delete all existing orders. This is primarily for debugging purposes.
+
+#### Refresh
+Rrefresh the desktop. This should get a fresh copy of all trades from the server and redisplay them. This is primarily for debugging purposes.
+
+### Push Notifications
+Make sure you listen to the push notifications sent by the server and update orders stored in the front-end accordingly. In fact, you should not update orders based on user actions. User actions should simply be sent to the server and then wait for server's push notifications to update local orders. This allows all front-ends users to see order updates simultaneously. A good test of your implementation is to open Trader Desktop on multiple browsers or browser tabs. Performing actions in one browser should update information on all browsers running Trader Desktop.
+
+### Brownie Points
+For bonus points, make the Trader Desktop responsive. Here's a mobile design to get your creative juices flowing:
+![Trader Desktop Mobile View](assets/trader-desktop-mobile-view.png)
+
+### Style Guide
+Use the style guide below to implement the visual design with precision.
+![Style Guide](assets/trader-desktop-style-guide.png)
