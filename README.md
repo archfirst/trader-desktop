@@ -207,13 +207,14 @@ Trader Desktop Exercise
 Now that we understand the business domain and the server API, here's your front-end exercise. You can build the front-end in any technlogy of your choice, however be sure to follow best practices:
 
 - Do not mix HTML, CSS and JavaScript. These should be in seperate files.
-- Structure your code well so that it is readable. Use proper indentation. Do not mix spaces and tabs. Our preference is all spaces and 4 space indents. Set up your editor to assist you with this.
-- Modularize your code. Do not put all HTML in one file, all CSS in one file and all JavaScript in one file! Break up the screens into smaller logical components and code them in seperate files and folders. You can use modularization techniques described by methodologies such as [BEM](http://bem.info/), [SMACSS](http://smacss.com/) and [OOCSS](https://github.com/stubbornella/oocss/wiki). Our personal preference is SMACSS.
-- Use a preprocessor like SASS or Less to modularize your CSS.
+- Structure your code for readability. Use proper indentation. Do not mix spaces and tabs. Our preference is all spaces and 4 space indents. Set up your editor to assist you with this.
+- Modularize your code. Do not put all HTML in one file, all CSS in another and all JavaScript in yet another file! Break up the screens into smaller logical components and code them in seperate files and folders. You can use modularization techniques described in methodologies such as [BEM](http://bem.info/), [SMACSS](http://smacss.com/) and [OOCSS](https://github.com/stubbornella/oocss/wiki). Our personal preference is SMACSS.
+- Use a preprocessor like Sass or Less to modularize your CSS.
 - Use MVC principles to seperate your models, views and control logic. You can use an MVC framework like Backbone or AngularJS to do this.
-- Use build tools like Grunt to formalize your build process.
-- Include JSHint in your build script to catch JavaScript issues.
-- Use testing frameworks such as Mocha, Karma and Cucumber to write unit and integration tests.
+- Use build tools like Grunt to automate repetitive tasks like minification, compilation, unit testing, linting, etc.
+- Include JSHint in your build script to detect errors and potential problems in JavaScript code and to enforce coding conventions.
+- Use testing frameworks such as Mocha, Jasmine, Karma and Cucumber to write unit and integration tests.
+- Finally, maintain the integrity of the visual design. This means paying extra attention to measurements, colors and alignment of elements to implement a user interface that is pleasing to the eye and captures the soul of the design!
 
 You can assume a reasonably modern browser supporting HTML5 (IE9+, latest Chrome, Firefox and Safari).
 
