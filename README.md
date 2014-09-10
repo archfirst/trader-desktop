@@ -199,8 +199,7 @@ As mentioned earlier, the server is fully coded. Use the instrunctions below to 
         $ npm start
 * Make sure the server is running by pointing your browser to [http://localhost:8080](http://localhost:8080). You should see the server home page with the message "This is the Trader Desktop server".
 
-Running Diagnostics
--------------------
+### Run Diagnostics ###
 We have a seperate web application to exercise the functionality of the server. This application is also very instructive in understanding the server API. Go to the [Trader Desktop Server Diagnostics](https://github.com/archfirst/trader-desktop-server-diagnostics) project to build and run this application.
 
 Trader Desktop Exercise
